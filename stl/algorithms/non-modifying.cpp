@@ -7,6 +7,8 @@
 
 /*
     Examples for non-modifying algorithms in the STL.
+
+
 */
 
 template <typename T>
@@ -28,7 +30,7 @@ void anyOfBigger5(const std::vector<T> &vec)
 
     if (std::any_of(begin(vec), end(vec), isBiggerThan5))
     {
-        std::cout << "one element bigger than 5\n";
+        std::cout << "One element bigger than 5\n";
     }
 }
 
@@ -41,7 +43,7 @@ void noneOfIs9(const std::vector<T> &vec)
 
     if (std::none_of(begin(vec), end(vec), noneOfIs9))
     {
-        std::cout << "no element is equal to 9\n";
+        std::cout << "No element is equal to 9\n";
     }
 }
 
@@ -49,7 +51,7 @@ template <typename T>
 void count1s(const std::vector<T> &vec)
 {
     const T count1s = std::count(begin(vec), end(vec), 1);
-    std::cout << "count 1s = " << count1s << "\n";
+    std::cout << "Count 1s = " << count1s << "\n";
 }
 
 template <typename T>
@@ -60,7 +62,7 @@ void countOdd(const std::vector<T> &vec)
     };
 
     const T countOdds = std::count_if(begin(vec), end(vec), isOdd);
-    std::cout << "count odd = " << countOdds << "\n";
+    std::cout << "Count odd = " << countOdds << "\n";
 }
 
 template <typename T>
@@ -70,7 +72,7 @@ void findConsecutiveElements(const std::vector<T> &vec)
 
     if (it != vec.end())
     {
-        std::cout << "first consecutive element = " << *it << " at position = " << std::distance(begin(vec), it) << "\n";
+        std::cout << "First consecutive element = " << *it << " at position = " << std::distance(begin(vec), it) << "\n";
     }
 }
 
@@ -79,7 +81,39 @@ void haveSameElements(const std::vector<T> &vec1, const std::vector<T> &vec2)
 {
     if (std::is_permutation(begin(vec1), end(vec1), begin(vec2)))
     {
-        std::cout << "both vectors contain the same elements\n";
+        std::cout << "Both vectors contain the same elements\n";
+    }
+}
+
+template <typename T>
+void searchForMultipleConsecutiveElements(const std::vector<T> &vec, const std::vector<T> &elements)
+{
+    // returns the iterator pointing to the first element in vec
+    auto it = std::search(begin(vec), end(vec), begin(elements), end(elements));
+
+    if (it != vec.end())
+    {
+        std::cout << "First consecutive element (" << *it << ") found at position " << it - vec.begin() << "\n";
+    }
+    else
+    {
+        std::cout << "No element found\n" ;
+    }
+
+}
+
+template <typename T>
+void searchForSameConsecutiveElement(const std::vector<T> &vec, T value, size_t count)
+{
+    auto it = std::search_n(begin(vec), end(vec), value, count);
+
+    if (it != vec.end())
+    {
+        std::cout << "First consecutive element (" << *it << ") found at position " << it - vec.begin() << "\n";
+    }
+    else
+    {
+        std::cout << "No element found\n";
     }
 }
 
@@ -130,4 +164,17 @@ int main(int argc, char *argv[])
         haveSameElements(vec, vec2);
     }
 
+    // search
+    {
+        std::vector<uint32_t> elements(COUNT/2);
+        std::copy_n(begin(vec), elements.size(), begin(elements));
+
+        searchForMultipleConsecutiveElements(vec, elements);
+    }
+
+    // search_n
+    {
+        uint32_t value = 5;
+        searchForSameConsecutiveElement(vec, value, 2);
+    }
 }
