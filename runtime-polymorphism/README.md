@@ -16,3 +16,8 @@ Disadvantage of the API:
 - Client has to take care of memory management and inheritance
 - Implementation class is always heap allocated
 - Access to implementation class must be synchronized
+
+## Advanced polymorphism
+
+### 1. Step
+Encapsulate int in an own class
